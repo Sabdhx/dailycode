@@ -1,5 +1,6 @@
 import React, {  useContext, useState } from "react";
 import { MyContext } from "../context/userContext";
+import Catagories from "./Catagories";
 
 const ExpenseModal = ({
   isOpen,
@@ -9,17 +10,26 @@ const ExpenseModal = ({
   onClose: () => void;
 }) => {
   const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("");
   const [wallet, setWallet] = useState<"cash" | "bank">("cash");
- const {expense , setExpense,setTotalAmount,totalAmount} = useContext(MyContext)
+ const {expense , setExpense,setTotalAmount,totalAmount,setCashAmount , setBankAmount,bankAmount,cashAmount,category} = useContext(MyContext)
  console.log(expense)
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setAmount("");
-    setCategory("");
+ 
     setWallet("cash");
     setExpense((prev)=>[...prev,({amount,category,wallet})]);
-    setTotalAmount(totalAmount - amount)
+    if(wallet === "cash"){
+      setCashAmount(cashAmount - amount)
+      setTotalAmount(totalAmount - amount)
+
+    }
+    if(wallet === "bank"){
+      setBankAmount(bankAmount - amount);
+      setTotalAmount(totalAmount - amount)
+    }
+    
+
      console.log({amount,category,wallet})
      onClose();
 
@@ -57,7 +67,7 @@ const ExpenseModal = ({
             <label className="block text-sm font-medium text-gray-700">
               Category
             </label>
-            <input
+            {/* <select
               type="text"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
@@ -65,6 +75,21 @@ const ExpenseModal = ({
               className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+          </select> */}
+
+          <select name="" id="" className="mt-1 w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            
+            {
+              category.map((item)=>{
+                return(
+                  <>
+                 <option value={item.input}>{item.input}</option>
+                  </>
+                )
+              })
+            }
+          
+          </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">

@@ -28,7 +28,9 @@ type newIncome ={
   amount:number,
   method:"cash" | "bank"
 }
-
+type never ={
+  name:string
+}
 
 
 export const UserContextProvider: React.FC<UserContextProviderProps> = ({
@@ -40,7 +42,7 @@ export const UserContextProvider: React.FC<UserContextProviderProps> = ({
   const [cashAmount, setCashAmount] = useState<number>(0);
   const [bankAmount, setBankAmount] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(cashAmount+bankAmount);
-  
+  const[category, setCatagory]=useState<never>([])
 
   const catagoryChanges = (data: catagoryData) => {
     setCatagories((prev) => [...prev, { data }]);
@@ -87,7 +89,7 @@ return (
         setCashAmount,
         bankAmount,
         setBankAmount,
-        setIncomeMoney
+        setIncomeMoney,setCatagory, category
       }}
     >
       {children}

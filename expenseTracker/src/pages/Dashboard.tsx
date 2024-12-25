@@ -62,11 +62,7 @@ function Dashboard() {
             typeOfData="add Category"
           />
 
-          <button 
-          className="bg-blue-500 text-white py-4 rounded shadow hover:bg-blue-600"
-          onClick={()=>{navigate("/catagory")}}>
-            check catagory
-          </button>
+        
 
           <button 
           className="bg-blue-500 text-white py-4 rounded shadow hover:bg-blue-600"

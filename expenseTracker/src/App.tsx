@@ -10,7 +10,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route  path='/' element={<Dashboard/>}/>
-          <Route  path='/catagory' element={<Catagories/>}/>
           <Route  path='/Expenses' element={<Expenses/>}/>
 
         </Routes>

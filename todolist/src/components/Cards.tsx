@@ -48,7 +48,7 @@ function Cards() {
             <div>Priority</div>
             <div>Due Date</div>
           </div>
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y ">
             {data.length > 0 ? (
               data.map((item: DataItem, index) => (
                 <div
