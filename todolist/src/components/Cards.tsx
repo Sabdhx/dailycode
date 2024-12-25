@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
-import { MyContext } from '../context/DataContext';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MyContext } from '../context/DataContext';
 
 interface DataItem {
   description: string;
@@ -11,21 +11,19 @@ interface DataItem {
 
 function Cards() {
   const { data, setData } = useContext(MyContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const settingDescription = (index: number, description: string) => {
     const updatedData = [...data];
     updatedData[index].description = description;
-    setData(updatedData); // Update the state
+    setData(updatedData);
   };
 
   const settingDueDate = (index: number, dueDate: string) => {
     const updatedData = [...data];
-    updatedData[index].dueDate = new Date(dueDate); // Store as Date
+    updatedData[index].dueDate = new Date(dueDate);
     setData(updatedData);
-    const due = dueDate
-    console.log(due)
   };
-  
 
   const settingCategory = (index: number, category: string) => {
     const updatedData = [...data];
@@ -40,71 +38,81 @@ function Cards() {
   };
 
   return (
-    < >
-    
-      {data.length > 0 ? (
-        data.map((item: DataItem, index) => (
-          <div key={item.description , index}> {/* Ensure unique key */}
-            <p>Description:
-              <input 
-                type="text" 
-                value={item.description} 
-                onChange={(e) => settingDescription(index, e.target.value)} 
-              />
-            </p>
-
-            <p>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Due Date</label>
-                <input
-  type="date"
-  value={item.dueDate ? new Date(item.dueDate).toISOString().split('T')[0] : ''} // Convert to Date and format
-  onChange={(e) => settingDueDate(index, e.target.value)} // Pass index and value
-/>
-
-              </div>
-            </p>
-
-            <p>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Category</label>
-                <select
-                  name="catagory"
-                  className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                  value={item.catagory}
-                  onChange={(e) => settingCategory(index, e.target.value)}
-                >
-                  <option value="">Select a category</option>
-                  <option value="work">Work</option>
-                  <option value="personal">Personal</option>
-                </select>
-              </div>
-            </p>
-
-            <p>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Priority</label>
-                <select
-                  name="priority"
-                  className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
-                  value={item.priority}
-                  onChange={(e) => settingPriority(index, e.target.value as 'low' | 'medium' | 'high')}
-                >
-                  <option value="">Select priority</option>
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-            </p>
-            <hr />
-            
+    <>
+      <div className="flex flex-col items-center bg-gray-100 min-h-screen py-8">
+        <h1 className="text-2xl font-semibold mb-6">Task Manager</h1>
+        <div className="bg-white bg-gray-400 rounded-lg w-[90%] max-w-4xl">
+          <div className="flex justify-between items-center bg-gray-800 text-white text-sm font-semibold p-4 rounded-t-lg">
+            <div>Description</div>
+            <div>Category</div>
+            <div>Priority</div>
+            <div>Due Date</div>
           </div>
-        ))
-      ) : (
-        <p>No tasks available</p>
-      )}
-      <button onClick={()=>{navigate("/")}}>back</button>
+          <div className="divide-y divide-gray-200">
+            {data.length > 0 ? (
+              data.map((item: DataItem, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center p-4 "
+                >
+                  <div className="flex flex-col">
+                    <input
+                      type="text"
+                      value={item.description}
+                      onChange={(e) => settingDescription(index, e.target.value)}
+                      className="border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                   
+                    <select
+                      value={item.catagory}
+                      onChange={(e) => settingCategory(index, e.target.value)}
+                      className="border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="">Select</option>
+                      <option value="work">Work</option>
+                      <option value="personal">Personal</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <select
+                      value={item.priority}
+                      onChange={(e) =>
+                        settingPriority(index, e.target.value as 'low' | 'medium' | 'high')
+                      }
+                      className="border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    >
+                      <option value="">Select</option>
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <input
+                      type="date"
+                      value={
+                        item.dueDate ? new Date(item.dueDate).toISOString().split('T')[0] : ''
+                      }
+                      onChange={(e) => settingDueDate(index, e.target.value)}
+                      className="border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center p-4 text-gray-500">No tasks available</div>
+            )}
+          </div>
+        </div>
+        <button
+          onClick={() => navigate('/')}
+          className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        >
+          Back
+        </button>
+      </div>
     </>
   );
 }

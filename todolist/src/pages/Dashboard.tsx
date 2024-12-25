@@ -9,10 +9,7 @@ function Dashboard() {
   const dateSelection = (date: string) => {
     const today = new Date().toISOString().split("T")[0];
 
-    if (new Date(date) < new Date(today)) {
-      alert("Please select a future date.");
-      return;
-    }
+  
     setDueDate(date);
   };
 
@@ -33,7 +30,7 @@ function Dashboard() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-[10%]">
+    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-[3%]">
       <h1 className="text-2xl font-bold text-center mb-6">Task Dashboard</h1>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
@@ -87,6 +84,7 @@ function Dashboard() {
 
         <input
           type="date"
+          min={new Date().toISOString().split("T")[0]}
           className="w-full mt-1 p-2 border rounded-md focus:ring-blue-500 focus:border-blue-500"
           value={dueDate}
           onChange={(e) => dateSelection(e.target.value)}

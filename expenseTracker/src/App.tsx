@@ -1,14 +1,22 @@
-
-import './App.css'
-import Dashboard from './pages/Dashboard'
+import "./App.css";
+import Catagories from "./components/Catagories";
+import Expenses from "./components/Expenses";
+import Dashboard from "./pages/Dashboard";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-
   return (
     <>
-     <Dashboard/>
+      <BrowserRouter>
+        <Routes>
+          <Route  path='/' element={<Dashboard/>}/>
+          <Route  path='/catagory' element={<Catagories/>}/>
+          <Route  path='/Expenses' element={<Expenses/>}/>
+
+        </Routes>
+      </BrowserRouter>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

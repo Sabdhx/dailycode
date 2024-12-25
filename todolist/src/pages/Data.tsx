@@ -9,7 +9,7 @@ const Data: React.FC = () => {
 
   return (
 
-    <div className='grid grid-cols-4 gap-[20px] mt-5'>
+    <div className=''>
  <Cards/>
     
     </div>
