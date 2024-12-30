@@ -13,7 +13,6 @@ function Navbar() {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const { users } = useContext(MyContext) || { users: [] }; // Make sure users are provided, fallback to empty array
-  console.log(users);
 
   const closeModal = () => {
     setIsOpenModal(false);

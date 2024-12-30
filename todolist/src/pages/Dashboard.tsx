@@ -1,26 +1,29 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../context/DataContext";
 
 function Dashboard() {
   const { data, setData , description,setDescription,dueDate,setDueDate, catagory,setCatagory,priority,setPriority } = useContext(MyContext);
   const navigate = useNavigate();
- console.log(data)
-  const dateSelection = (date: string) => {
-    const today = new Date().toISOString().split("T")[0];
 
-  
+   useEffect(()=>{
+           localStorage.setItem('todos',JSON.stringify(data));
+    
+    },[data])
+ 
+  const dateSelection = (date: string) => {
+    const today = new Date().toISOString().split("T")[0]; 
     setDueDate(date);
   };
 
-  const handleAdding = () => {
+  const handleAdding = async() => {
     if (!description || !dueDate || !catagory || !priority) {
       alert("Please fill in all fields.");
       return;
     }
     setData((prev) => [
       ...prev,
-      { description, dueDate, catagory, priority },
+      {id:data.length, description, dueDate, catagory, priority },
     ]);
     setDescription("")
     setCatagory("")
@@ -28,6 +31,12 @@ function Dashboard() {
     setDueDate("")
     navigate("/data"); 
   };
+
+
+
+
+
+
 
   return (
     <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md mt-[3%]">

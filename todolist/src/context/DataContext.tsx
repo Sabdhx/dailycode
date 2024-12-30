@@ -1,8 +1,8 @@
-import React, { createContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useState, ReactNode } from 'react';
 
 // Define the context's value type
 interface ContextType {
-  data: string | null;
+  data: [];
   setData: React.Dispatch<React.SetStateAction<string | null>>;
   description: string;
   setDescription: React.Dispatch<React.SetStateAction<string>>;
@@ -25,12 +25,25 @@ interface DataContextProps {
 }
 
 export const DataContext: React.FC<DataContextProps> = ({ children }) => {
-  const [data, setData] = useState<[]>([]);
+  const [data, setData] = useState(
+    ()=>{
+    const savedData  = localStorage.getItem('todos');
+    return savedData ? JSON.parse(savedData) : []
+  }
+);
+
+ 
   const [description, setDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
   const [catagory, setCatagory] = useState<string>("");
   const [priority, setPriority] = useState<string>("");
   const [users, setUsers] = useState<any[]>([]); // Type users as an array of objects
+
+
+
+
+
+
 
   return (
     <MyContext.Provider value={{
