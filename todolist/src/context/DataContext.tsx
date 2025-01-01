@@ -1,4 +1,4 @@
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useEffect } from "react";
 
 // Define the context's value type
 interface ContextType {
@@ -12,7 +12,7 @@ interface ContextType {
   setPriority: React.Dispatch<React.SetStateAction<string>>;
   dueDate: string;
   setDueDate: React.Dispatch<React.SetStateAction<string>>;
-  users: any[];  // Correctly type the users state as an array
+  users: any[]; // Correctly type the users state as an array
   setUsers: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
@@ -25,19 +25,33 @@ interface DataContextProps {
 }
 
 export const DataContext: React.FC<DataContextProps> = ({ children }) => {
-  const [data, setData] = useState(
-    ()=>{
-    const savedData  = localStorage.getItem('todos');
-    return savedData ? JSON.parse(savedData) : []
-  }
-);
+  const [data, setData] = useState(() => {
+    const savedData = localStorage.getItem("todos");
+    return savedData ? JSON.parse(savedData) : [];
+  });
 
- 
   const [description, setDescription] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
   const [catagory, setCatagory] = useState<string>("");
   const [priority, setPriority] = useState<string>("");
-  const [users, setUsers] = useState<any[]>([]); // Type users as an array of objects
+  const [loading, setLoading] = useState<boolean>(false);
+  const [users, setUsers] = useState(() => {
+    const savedUsers = localStorage.getItem("users");
+    return savedUsers ? JSON.parse(savedUsers) : [];
+  });
+  // Type users as an array of objects
+  const [currentUser, setCurrentUser] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+
+  const settingUsers = (user) => {
+    const allUsers = [...users];
+   
+      const updateUser = [...allUsers, { username: user }];
+      setUsers(updateUser);
+      localStorage.setItem("users", JSON.stringify(updateUser));
+    
+
+  };
 
 
 
@@ -45,21 +59,31 @@ export const DataContext: React.FC<DataContextProps> = ({ children }) => {
 
 
 
+  
   return (
-    <MyContext.Provider value={{
-      data,
-      setData,
-      description,
-      setDescription,
-      catagory,
-      setCatagory,
-      priority,
-      setPriority,
-      dueDate,
-      setDueDate,
-      users,
-      setUsers
-    }}>
+    <MyContext.Provider
+      value={{
+        data,
+        setData,
+        description,
+        setDescription,
+        catagory,
+        setCatagory,
+        priority,
+        setPriority,
+        dueDate,
+        setDueDate,
+        users,
+        setUsers,
+        currentUser,
+        setCurrentUser,
+        loading,
+        setLoading,
+        settingUsers,
+        filteredData,
+        setFilteredData,
+      }}
+    >
       {children}
     </MyContext.Provider>
   );

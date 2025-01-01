@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MyContext } from '../context/DataContext';
-import Cards from '../components/Cards';
+import Cards from '../components/Card/Cards';
 
 
 

@@ -1,28 +1,43 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Modal from './Modal';
-import { MyContext } from '../context/DataContext';
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { MyContext } from "../context/DataContext";
 
-type User = {
-  username: string;
-  date: string;
+type Todo = {
+  id: number;
+  description: string;
+  dueDate: string;
+  catagory: string;
+  priority: string;
+  currentUser: string;
 };
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const { users } = useContext(MyContext) || { users: [] }; // Make sure users are provided, fallback to empty array
-
-  const closeModal = () => {
-    setIsOpenModal(false);
-  };
-
-  const openModal = () => {
-    setIsOpenModal(true);
-  };
-
+  
+  const { data, loading,setData,users , filteredData  , setFilteredData,setUsers } = useContext(MyContext) || { data: [] }; // Ensure fallback
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const filteringdata = (username: string) => {
+    // Filter the data based on the selected username
+   
+    const filtered = data?.filter((td: Todo) =>
+    username === "full" ? td === td  : td.currentUser === username);
+    console.log("filtered data:", filtered); // For debugging purposes
+    setFilteredData(filtered || []); // Update filteredData with the filtered result
+ 
+  };
+
+
+  useEffect(()=>{
+    const filteringUsers = users?.filter((item,index,self)=>{
+      return self.findIndex((t) => t.currentUser === item.currentUser) === index;
+    })
+    setUsers(filteringUsers)
+  },[])
+
+useEffect(()=>{
+  setFilteredData(data)
+},[])
 
   return (
     <nav className="bg-blue-600 shadow-lg">
@@ -35,24 +50,28 @@ function Navbar() {
 
           {/* Menu for larger screens */}
           <div className="hidden md:flex space-x-6">
-            <button
-              className="text-white hover:text-gray-300"
-              onClick={openModal} // Correctly invoking the function
-            >
-              Add User
-            </button>
             <span className="text-white">Logged In User:</span>
-            <select
-              name="users"
-              id="users-select"
-              className="text-black border rounded-md px-4 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              {users.map((item: User, index: number) => (
-                <option key={index} value={item?.username}>
-                  {item.username}
-                </option>
-              ))}
-            </select>
+            {loading ? (
+  <h1>Loading...</h1> // Display loading message
+) : (
+  <select
+    onChange={(e) => filteringdata(e.target.value)} // Call filteringdata on change
+    name="users"
+    id="users-select"
+    className="text-black border rounded-md px-4 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+  >
+    <option value="full">select a user</option>
+    {/* Iterate over data and create option elements */}
+    {users?.map((item:Todo, index:number) => {
+      return (
+        <option key={index} value={item.username}>
+          {item.username}
+        </option>
+      );
+    })}
+  </select>
+)}
+
           </div>
 
           {/* Hamburger Menu for small screens */}
@@ -73,9 +92,7 @@ function Navbar() {
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d={
-                    isOpen
-                      ? 'M6 18L18 6M6 6l12 12'
-                      : 'M4 6h16M4 12h16M4 18h16'
+                    isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"
                   }
                 ></path>
               </svg>
@@ -117,7 +134,8 @@ function Navbar() {
           </div>
         )}
       </div>
-      <Modal onClose={closeModal} isOpen={isOpenModal} />
+
+     
     </nav>
   );
 }

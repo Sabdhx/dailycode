@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Dashboard from './pages/Dashboard'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Cards from './components/Cards';
+import Cards from './components/Card/Cards';
 import Navbar from './components/Navbar';
+
 
 function App() {
 
@@ -16,7 +17,6 @@ function App() {
 
       </Routes>
       </BrowserRouter>
-      
     </>
   )
 }
