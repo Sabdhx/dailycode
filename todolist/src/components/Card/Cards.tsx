@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MyContext } from "../../context/DataContext";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { arrayMove, SortableContext, useSortable } from "@dnd-kit/sortable";
 import Item from "../singleItem/Item";
 
 interface DataItem {
@@ -20,8 +20,7 @@ type User = {
 };
 
 function Cards() {
-  const { data, setData, filteredData, setFilteredData } =
-    useContext(MyContext);
+  const { data, setData, setUsers } = useContext(MyContext);
   const [index, setIndex] = useState<number>(0);
   const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -33,7 +32,21 @@ function Cards() {
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    console.log({ active, over });
+    if (over && active.id !== over.id) {
+      setData((items:DataItem) => {
+        const oldIndex = items.findIndex((index:DataItem) => index.id === active.id);
+        const newIndex = items.findIndex((index:DataItem) => index.id === over.id);
+        const updatedData = arrayMove(items, oldIndex, newIndex);
+        localStorage.setItem("todos", JSON.stringify(updatedData));
+      });
+
+      setUsers((items) => {
+        const oldIndex = items.findIndex((index) => index.id === active.id);
+        const newIndex = items.findIndex((index) => index.id === over.id);
+        const updatedUsers = arrayMove(items, oldIndex, newIndex);
+        localStorage.setItem("users", JSON.stringify(updatedUsers));
+      });
+    }
   };
 
   return (
@@ -56,11 +69,12 @@ function Cards() {
                     <>
                       <Item
                         id={item.id}
-                        descripiton={item.description}
+                        description={item.description}
                         catagory={item.catagory}
                         priority={item.priority}
                         dueDate={item.dueDate}
                         user={item.currentUsers}
+                        index={index}
                       />
                     </>
                   ))

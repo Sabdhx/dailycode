@@ -12,8 +12,8 @@ interface ContextType {
   setPriority: React.Dispatch<React.SetStateAction<string>>;
   dueDate: string;
   setDueDate: React.Dispatch<React.SetStateAction<string>>;
-  users: any[]; // Correctly type the users state as an array
-  setUsers: React.Dispatch<React.SetStateAction<any[]>>;
+  // users: any[]; // Correctly type the users state as an array
+  // setUsers: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 // Create the context with a default value of `undefined`
@@ -35,7 +35,8 @@ export const DataContext: React.FC<DataContextProps> = ({ children }) => {
   const [catagory, setCatagory] = useState<string>("");
   const [priority, setPriority] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [users, setUsers] = useState(() => {
+  const [users, setUsers] = useState(
+  () => {
     const savedUsers = localStorage.getItem("users");
     return savedUsers ? JSON.parse(savedUsers) : [];
   });
@@ -45,21 +46,13 @@ export const DataContext: React.FC<DataContextProps> = ({ children }) => {
 
   const settingUsers = (user) => {
     const allUsers = [...users];
-   
-      const updateUser = [...allUsers, { username: user }];
+
+      const updateUser = [...allUsers, { username: user,id:allUsers.length }];
       setUsers(updateUser);
       localStorage.setItem("users", JSON.stringify(updateUser));
-    
 
   };
-
-
-
-
-
-
-
-  
+  console.log(users)
   return (
     <MyContext.Provider
       value={{
@@ -73,8 +66,8 @@ export const DataContext: React.FC<DataContextProps> = ({ children }) => {
         setPriority,
         dueDate,
         setDueDate,
-        users,
-        setUsers,
+           users,
+           setUsers,
         currentUser,
         setCurrentUser,
         loading,

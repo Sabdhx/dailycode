@@ -18,8 +18,8 @@ function Dashboard() {
 
     currentUser,
     setCurrentUser,
- 
-    settingUsers
+
+    settingUsers,
   } = useContext(MyContext);
   const navigate = useNavigate();
 
