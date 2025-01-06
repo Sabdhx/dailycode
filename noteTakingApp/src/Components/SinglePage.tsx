@@ -1,36 +1,42 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MyContext } from "../Context/Context";
 import NewNote from "../Form/Form";
+import useHook from "../Hooks/useHook";
+import Markdown from "react-markdown";
 
 function SinglePage() {
   const { id } = useParams();
   const context = useContext(MyContext);
   const { data } = context;
-
+  const {handleEditing} = useHook()
   const [showEditForm, setShowEditForm] = useState<boolean>(false);
 
-  const handleSubmit = () => {
-    console.log("first");
-  };
+
   return (
     <>
       {showEditForm ? (
         <>
-          <NewNote title={data[id].title} body={data[id].body} tags={data[id].tags} handleSubmit={handleSubmit} />
+          <NewNote
+            data={data[id].payload}
+            id={data[id].id}
+            handleSubmit={handleEditing}
+          />
         </>
       ) : (
         <>
           <div className="min-h-screen bg-gray-100 flex items-center justify-center py-12">
             <div className="max-w-3xl w-full bg-white shadow-lg rounded-lg p-8">
               <h1 className="text-4xl font-bold text-blue-700 mb-4">
-                {data[id].title}
+                {data[id].payload.title}
               </h1>
               <p className="text-lg font-medium text-gray-600 mb-6">
                 <span className="font-semibold text-blue-500">Tags:</span>{" "}
-                {data[id].tags}
+                {data[id].payload.tags}
               </p>
-              <p className="text-gray-700 leading-relaxed">{data[id].body}</p>
+              <Markdown className="text-gray-700 leading-relaxed">
+                {data[id].payload.body}
+              </Markdown>
             </div>
           </div>
           <button

@@ -5,7 +5,14 @@ function useHook() {
   const { data, setData } = useContext(MyContext); // Array to store notes
 
   const handleSubmit = (payload) => {
-    setData((prev) => [...prev, payload]); // Add note to data array
+    setData((prev) => [...prev, { payload, id: data.length }]); // Add note to data array
+  };
+
+  const handleEditing = (text, id) => {
+    const simpleData = [...data];
+    simpleData[id].payload = text;
+    // text = updatingData;
+    setData(simpleData);
   };
 
   useEffect(() => {
@@ -13,6 +20,7 @@ function useHook() {
   }, [data]);
   return {
     handleSubmit,
+    handleEditing,
   };
 }
 

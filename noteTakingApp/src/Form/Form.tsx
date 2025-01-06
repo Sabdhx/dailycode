@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
+import Markdown from 'https://esm.sh/react-markdown@9'
 
 type Props = {
-  title:string;
-  body:string;
-  tags:string;
-   data:string[]
+  id: number;
+  data: string[];
   handleSubmit: () => void;
 };
-const NewNote = ({handleSubmit,title,body,tags}: Props) => {
-  const [title,setTitle] = useState<string>("");
-  const [body,setBody] = useState<string>("");
-  const [tags,setTags]  = useState<string>("")
-  
-   const submit=()=>{
-    const payload:string[] = {
+const NewNote = ({ handleSubmit, data, id }: Props) => {
+  const [title,setTitle] =useState(data?.title || "");
+  const [body, setBody] = useState(data?.body || "");
+  const [tags, setTags] = useState(data?.tags || "");
+  // console.log(data);
+  const submit = () => {
+    const payload: string[] = {
       title,
       body,
-      tags
-    }
-    handleSubmit(payload)
-   }
+      tags,
+    };
+    handleSubmit(payload, id);
+  };
+
   return (
     <div className="p-6 max-w-lg mx-auto">
       <div className="flex space-x-4">
@@ -34,8 +34,9 @@ const NewNote = ({handleSubmit,title,body,tags}: Props) => {
           <input
             type="text"
             id="title"
+            value={title}
             name="title"
-            onChange={(e) => setTitle( e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter title"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -53,7 +54,8 @@ const NewNote = ({handleSubmit,title,body,tags}: Props) => {
             type="text"
             id="tags"
             name="tags"
-            onChange={(e) => setTags( e.target.value)}
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
             placeholder="Enter tags (comma separated)"
             required
             className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -71,7 +73,7 @@ const NewNote = ({handleSubmit,title,body,tags}: Props) => {
         <textarea
           id="body"
           name="body"
-          
+          value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Enter the body text here..."
           required
@@ -85,13 +87,13 @@ const NewNote = ({handleSubmit,title,body,tags}: Props) => {
         >
           back
         </Link>
-        <Link
-          to={`/`}
+        <button
+          // to={`/`}
           onClick={submit}
           className="mt-6 w-[60%] p-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 inline-block text-center"
         >
           Submit
-        </Link>
+        </button>
       </div>
     </div>
   );

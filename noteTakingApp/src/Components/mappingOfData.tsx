@@ -1,4 +1,5 @@
 import React from 'react'
+import Markdown from 'react-markdown'
 import { useNavigate } from 'react-router-dom'
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 function ShowSingleNote({title,tags,body,index}: Props) {
   const navigate = useNavigate()
+ 
   return (
     <>
     <div
@@ -23,7 +25,7 @@ function ShowSingleNote({title,tags,body,index}: Props) {
         <span className="font-medium text-blue-500">Tags: </span>
         {tags}
       </p>
-      <p className="text-gray-700 mt-3">{body}</p>
+      <Markdown className="text-gray-700 mt-3">{body}</Markdown>
     </div> 
     </>
      )

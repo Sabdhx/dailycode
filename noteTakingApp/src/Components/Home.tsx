@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import NewNote from "../Form/Form";
+import NewNote from "./Form";
 import { Data } from "../types/Types";
 import { useNavigate } from "react-router-dom";
 import { MyContext } from "../Context/Context";
@@ -22,7 +22,7 @@ function Home() {
           {data.length > 0 ? (
             <div className="space-y-6 grid grid-cols-3 gap-5">
               {data.map((item, index) => (
-               <ShowSingleNote title={item.title} tags={item.tags} body={item.body} index={index}/>
+               <ShowSingleNote title={item.payload.title} tags={item.payload.tags} body={item.payload.body} index={index}/>
               ))}
             </div>
           ) : (

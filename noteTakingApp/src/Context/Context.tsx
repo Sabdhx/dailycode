@@ -10,6 +10,8 @@ import React, {
 interface ContextType {
   data: string[]; // Changed from string to string[]
   setData: Dispatch<SetStateAction<string[]>>;
+  note: string[];
+  setNote: Dispatch<SetStateAction<string[]>>;
 }
 
 interface ChildProps {
@@ -23,9 +25,10 @@ function Context({ children }: ChildProps) {
     const value = localStorage.getItem("data");
     return value ? JSON.parse(value) : []; // Ensure the default is an array
   });
+  const [note, setNote] = useState<[] | null>(null);
 
   return (
-    <MyContext.Provider value={{ data, setData }}>
+    <MyContext.Provider value={{ data, setData, note, setNote }}>
       {children}
     </MyContext.Provider>
   );
