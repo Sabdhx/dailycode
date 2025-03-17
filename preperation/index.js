@@ -70,14 +70,14 @@
 // dataFetching()
 
 
-function greet(name, callback) {
-  console.log("Hello, " + name);
-  callback();
-}
+// function greet(name, callback) {
+//   console.log("Hello, " + name);
+//   callback();
+// }
 
-function sayGoodbye() {
-  console.log("Goodbye!");
-}
+// function sayGoodbye() {
+//   console.log("Goodbye!");
+// }
 
-greet("Alice", sayGoodbye);
+// greet("Alice", sayGoodbye);
 
