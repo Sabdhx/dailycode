@@ -1,17 +1,62 @@
-const object  = {
-  name:"Ali Abdullah",
-  second:function(){
-    return console.log(this.name)
-  },
-  third:()=>{
-   return console.log(this.name)
-  },
-  fourth:[
-    "Ali","second","umar"
-  ]
-}
+// object destruction
+
+// const object  = {
+//   name:"Ali Abdullah",
+//   second:function(){
+//     return console.log(this.name)
+//   },
+//   third:()=>{
+//    return console.log(this.name)
+//   },
+//   fourth:[
+//     "Ali","second","umar"
+//   ]
+// }
+
+// const person={
+//   name:"ALI",
+//   location:{name:"Abdullah", address:"newyork City"}
+// }
+
+// const {location:{name,city}} = person;
+// console.log(name)
+
+// object.second();
+// object.third();
+// console.log(object.fourth)
+
+// let globalVar = "I'm global";
+// function test() {
+//     globalVar = "I'm not global"
+// }
+
+// console.log(globalVar);
+
+// function outerFunction(){
+//   let count = 0;
+//   return function InnerFuntion(){
+//     count++;
+//     console.log(count);
+//   };
+// }
+
+// const counter = outerFunction(); // outerFunction runs and returns innerFunction
+// counter(); // 1
+// counter(); // 2
+// counter(); // 3
+
+// promises are used to run the async funtion more correctly then callback;
+const isOpen = "true";
+
+const learningPromises = new Promise((resolve,reject)=>{
+  setTimeout(() => {
+    if(isOpen === "true"){
+      resolve("this isOpen is set to true")
+    }else{
+      reject("this isOpen is set to false")
+    }
+  }, 2000);
+})
 
 
-object.second();
-object.third();
-console.log(object.fourth)
+learningPromises.then((data)=>console.log("true " +data)).catch((error)=>console.log("error "+error)).finally(()=>console.log("this one will run in every situation"))
