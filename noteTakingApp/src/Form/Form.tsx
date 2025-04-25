@@ -22,6 +22,7 @@ const NewNote = ({ handleSubmit, data, id }: Props) => {
   };
 
   return (
+    <>
     <div className="p-6 max-w-lg mx-auto">
       <div className="flex space-x-4">
         <div className="flex-1">
@@ -96,6 +97,7 @@ const NewNote = ({ handleSubmit, data, id }: Props) => {
         </button>
       </div>
     </div>
+    </>
   );
 };
 
