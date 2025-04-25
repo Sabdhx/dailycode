@@ -1,41 +1,41 @@
-// class information{
-//   constructor(){
-//     this.name = "abdullah";
-//     this.age = 33;
-//     this.fatherName = "zafar Ali"
-//     this.gmail = "Syedaliabdullah@gmail.com"
-//   }
-//   firstMethod() {
-//          return {
-//           name:this.name,
-//           age:this.age,
-//           fatherName:this.fatherName,
-//           gmail:this.gmail
-//          }
-//       }
+class information{
+  constructor(){
+    this.name = "abdullah";
+    this.age = 33;
+    this.fatherName = "zafar Ali"
+    this.gmail = "Syedaliabdullah@gmail.com"
+  }
+  firstMethod() {
+         return {
+          name:this.name,
+          age:this.age,
+          fatherName:this.fatherName,
+          gmail:this.gmail
+         }
+      }
 
-//       secondMethod(){
-//        return "hey nate hows life"
-//       }
+      secondMethod(){
+       return "hey nate hows life"
+      }
      
 
-// }
-// const firstUser = new information()
-// const secondUser = new information()
+}
+const firstUser = new information()
+const secondUser = new information()
 
-// console.log(secondUser.secondMethod())
+console.log(secondUser.secondMethod())
 
-// console.log(secondUser.auth());
+console.log(secondUser.auth());
 
-//  const objecting = {
-//   secondObject:{
-//     name:"ali abdullah",
-//     class:"23",
-//     hobby:"buckchodi"
-//   }
+ const objecting = {
+  secondObject:{
+    name:"ali abdullah",
+    class:"23",
+    hobby:"buckchodi"
+  }
 
-//  }
-//  console.log(objecting)
+ }
+ console.log(objecting)
 
 
 
