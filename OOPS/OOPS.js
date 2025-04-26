@@ -217,3 +217,28 @@
 // const loggingTheCarsClass = carsClass.updatedFunctionality(carFunctionalities);
 
 // console.log(loggingTheCarsClass);
+
+
+
+// encapsulation works
+
+class mine{
+  constructor(name,email){
+    this.name = name
+    let _email = email
+  }
+  getData(){
+    return _email
+  }
+
+  setData(data){
+    if(data > 0){
+      return `this is the normal data of the form ${this.name}`
+    }
+  }
+}
+
+
+const makingClass = new mine("Ali Abdullah","Abdullah@gmail.com")
+console.log(makingClass.setData(30))
+console.log(makingClass.getData())
